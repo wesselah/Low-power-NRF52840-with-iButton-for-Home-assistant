@@ -1,6 +1,6 @@
 # Supermini NRF52840 iButton to Home Assistant (BTHome V2)
 
-This project implements a low-power wireless iButton reader using a **nice!nano** (nRF52840) or compatible clone. It communicates with Home Assistant via the **BTHome V2** protocol over Bluetooth Low Energy (BLE).
+This project implements a low-power wireless iButton reader using a **Supermini nrf52840** (nRF52840) or compatible clone. It communicates with Home Assistant via the **BTHome V2** protocol over Bluetooth Low Energy (BLE).
 
 ## Features
 - **iButton Integration:** Scans and identifies iButtons (DS1990A) and broadcasts the ID.
