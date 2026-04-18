@@ -27,6 +27,20 @@ If using an external LED on **P0.06**:
 2. Connect the resistor to the **Anode** (long leg) of the LED.
 3. Connect the **Cathode** (short leg) of the LED to **GND**.
 
+## Software Installation
+Follow these steps to get the code running on your device:
+
+1. **Install CircuitPython:**
+   - Download and install **CircuitPython 9.x** for the nice!nano from [circuitpython.org](https://circuitpython.org/board/nice_nano/).
+2. **Download Libraries:**
+   - Download the [Adafruit CircuitPython Bundle](https://circuitpython.org/libraries).
+   - Locate `adafruit_onewire` in the bundle and copy the entire folder to the `/lib` folder on your nice!nano.
+   - *Note: No extra BLE libraries are needed as we use the built-in `_bleio` module.*
+3. **Deploy Code:**
+   - Copy `code.py` from this repository to the root directory of your board.
+4. **Configure:**
+   - Open `code.py` and adjust the `USE_EXTERNAL_LED` variable at the top to match your hardware setup.
+
 ## Configuration
 Customize the behavior at the top of `code.py`:
 
