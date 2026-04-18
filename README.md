@@ -7,9 +7,7 @@ This project implements a low-power wireless iButton reader using a **nice!nano*
 - **Ultra-Low Power:** Optimized for battery life (Deep Sleep < 5µA).
 - **Configurable Feedback:** Switch between the onboard LED or an external status LED via a software toggle.
 - **Smart Power Management:** The iButton reader is only powered during the active scan window.
-- **High-Precision Battery Sensing:** - Optimized for high-impedance 1MΩ/1MΩ voltage dividers.
-  - Uses SAADC dummy sampling and oversampling for stability.
-  - Software calibration factor for system-level accuracy.
+- **High-Precision Battery Sensing:** Optimized for high-impedance 1MΩ/1MΩ voltage dividers with software calibration.
 
 ## Hardware Setup
 ### Pinout
@@ -21,30 +19,34 @@ This project implements a low-power wireless iButton reader using a **nice!nano*
 | **Battery ADC**| P0.02 | 0.02 | Analog input for 1M/1M divider |
 | **External LED**| P0.06 | 0.06 | Optional external status LED |
 
-### External LED Wiring
-If using an external LED on **P0.06**:
-1. Connect **P0.06** to a **470Ω resistor**.
-2. Connect the resistor to the **Anode** (long leg) of the LED.
-3. Connect the **Cathode** (short leg) of the LED to **GND**.
+### Battery Specification
+- **Type:** 3.7V Lithium Polymer (LiPo) battery.
+- **Connection:** Standard JST-PH 2.0mm connector (check polarity on your nice!nano clone!).
+- **Voltage Range:** 3.4V (Empty) to 4.2V (Full).
+- **Safety:** It is recommended to use a LiPo with an integrated protection circuit (PCM).
+
+## Battery Life Expectancy (Conservative Estimate)
+Based on a **1000mAh LiPo** battery and a 5-minute heartbeat interval:
+- **Deep Sleep Current:** ~5-10µA.
+- **Active Scan Current:** ~10mA (for approx. 1.5 seconds).
+- **Expected Life:** **1.5 to 2.5 years** depending on the number of daily iButton scans and environmental factors (temperature). 
+*Note: Using a high-efficiency external LED and keeping `SLEEP_TIME` at 300s or higher is key to achieving these results.*
 
 ## Software Installation
-Follow these steps to get the code running on your device:
-
 1. **Install CircuitPython:**
    - Download and install **CircuitPython 9.x** for the nice!nano from [circuitpython.org](https://circuitpython.org/board/nice_nano/).
 2. **Download Libraries:**
    - Download the [Adafruit CircuitPython Bundle](https://circuitpython.org/libraries).
    - Locate `adafruit_onewire` in the bundle and copy the entire folder to the `/lib` folder on your nice!nano.
-   - *Note: No extra BLE libraries are needed as we use the built-in `_bleio` module.*
 3. **Deploy Code:**
    - Copy `code.py` from this repository to the root directory of your board.
 4. **Configure:**
-   - Open `code.py` and adjust the `USE_EXTERNAL_LED` variable at the top to match your hardware setup.
+   - Adjust `USE_EXTERNAL_LED` and `SLEEP_TIME` in `code.py` as needed.
 
-## Configuration
-Customize the behavior at the top of `code.py`:
+## Home Assistant Integration
+The device is automatically discovered as a **BTHome** device. 
+- **Sensor 0x01:** Battery Percentage.
+- **Sensor 0x09:** iButton Tag ID (reports the last byte of the ROM).
 
-```python
-USE_EXTERNAL_LED = True  # Set to False to use the built-in nice!nano LED
-SLEEP_TIME = 300         # Time between battery heartbeats (seconds)
-CALIBRATION_FACTOR = 1.02 # Fine-tune battery voltage readings
+## License
+MIT License
